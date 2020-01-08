@@ -1,13 +1,3 @@
-#!/usr/bin/env python
-# -*- encoding: utf-8 -*-
-"""
-@File    :   decryption.py
-@Time    :   2019/02/27
-@Author  :   Yaron Huang
-@Version :   1.0
-@Contact :   yaronhuang@qq.com
-@Desc    :   HIGH Quality Track Dectyption;File From Project 'RedSea'
-"""
 import base64
 
 from Crypto.Cipher import AES
@@ -32,11 +22,11 @@ def decrypt_security_token(security_token):
     iv = security_token[:16]
     encrypted_st = security_token[16:]
 
-    # Initialize decryptor
-    decryptor = AES.new(master_key, AES.MODE_CBC, iv)
+    # Initialize decrypter
+    decrypter = AES.new(master_key, AES.MODE_CBC, iv)
 
     # Decrypt the security token
-    decrypted_st = decryptor.decrypt(encrypted_st)
+    decrypted_st = decrypter.decrypt(encrypted_st)
 
     # Get the audio stream decryption key and nonce from the decrypted
     # security token
@@ -51,13 +41,13 @@ def decrypt_file(file, key, nonce):
     Decrypts an encrypted MQA file given the file, key and nonce
     """
 
-    # Initialize counter and file decryptor
+    # Initialize counter and file decrypter
     counter = Counter.new(64, prefix=nonce, initial_value=0)
-    decryptor = AES.new(key, AES.MODE_CTR, counter=counter)
+    decrypter = AES.new(key, AES.MODE_CTR, counter=counter)
 
     # Open and decrypt
     with open(file, "rb") as eflac:
-        flac = decryptor.decrypt(eflac.read())
+        flac = decrypter.decrypt(eflac.read())
 
         # Replace with decrypted file
         with open(file, "wb") as dflac:

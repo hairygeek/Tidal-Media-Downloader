@@ -35,10 +35,10 @@ from tidal_downloader.printhelper import printChoice, printErr, printSUCCESS
 
 
 class Download(object):
-    def __init__(self, threadNum=3):
+    def __init__(self, thread_num=3):
         self.config = TidalConfig()
         self.tool = TidalTool()
-        self.thread = ThreadTool(int(threadNum))
+        self.thread = ThreadTool(int(thread_num))
         self.ffmpeg = FFmpegTool(mergerTimeout=45)
         self.progress = ProgressTool(100)
         self.check = CheckTool()
@@ -515,7 +515,7 @@ class Download(object):
 
                     index = index + 1
                     if bFirstTime is False:
-                        if self.check.isInErr(index - 1, errIndex) == False:
+                        if self.check.is_in_error(index - 1, errIndex) == False:
                             continue
 
                     streamInfo = self.tool.getStreamUrl(
@@ -548,7 +548,7 @@ class Download(object):
                         "key": streamInfo["encryptionKey"],
                         "coverpath": coverPath,
                     }
-                    self.check.addPath(filePath)
+                    self.check.add_path(filePath)
                     # if not os.path.isfile(filePath):
                     self.thread.start(self.__thradfunc_dl, paraList)
                 self.thread.waitAll()
@@ -558,7 +558,7 @@ class Download(object):
                 bFirstTime = False
 
                 # check
-                isErr, errIndex = self.check.checkPaths()
+                isErr, errIndex = self.check.check_paths()
                 if isErr:
                     check = printChoice(
                         "[Err]\t\t" + str(len(errIndex)) +

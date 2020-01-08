@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-import os
 from aigpy import fileHelper
 
 
@@ -7,8 +5,8 @@ class CheckTool(object):
     def __init__(self):
         self.paths = []
 
-    def isInErr(self, index, errIndex):
-        for i in errIndex:
+    def is_in_error(self, index, error_index):
+        for i in error_index:
             if i == index:
                 return True
         return False
@@ -16,16 +14,16 @@ class CheckTool(object):
     def clear(self):
         self.paths = []
 
-    def addPath(self, path):
+    def add_path(self, path):
         self.paths.append(path)
 
-    def checkPaths(self):
+    def check_paths(self):
         index = 0
         flag = False
-        errIndex = []
+        err_index = []
         for path in self.paths:
             if fileHelper.getFileSize(path) <= 0:
-                errIndex.append(index)
+                err_index.append(index)
                 flag = True
             index = index + 1
-        return flag, errIndex
+        return flag, err_index
