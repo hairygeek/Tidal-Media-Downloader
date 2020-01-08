@@ -9,7 +9,13 @@ from aigpy.cmdHelper import myinput, myinputInt
 from tidal_downloader.tidal import TidalConfig
 from tidal_downloader.tidal import TidalAccount
 from tidal_downloader.download import Download
-from tidal_downloader.printhelper import printMenu, printChoice2, printErr, printWarring, LOG
+from tidal_downloader.printhelper import (
+    printMenu,
+    printChoice2,
+    printErr,
+    printWarring,
+    LOG,
+)
 
 TIDAL_DL_VERSION = "2019.10.26.0"
 
@@ -29,7 +35,14 @@ def logIn(username="", password=""):
         return False
 
     cf = TidalConfig()
-    cf.set_account(username, password, account.session_id, account.country_code, account.user_id, account2.session_id)
+    cf.set_account(
+        username,
+        password,
+        account.session_id,
+        account.country_code,
+        account.user_id,
+        account2.session_id,
+    )
     return True
 
 
@@ -64,7 +77,7 @@ def setting():
     print("AddYear      :\t" + cf.addyear + "(before album title)")
     while True:
         outputdir = myinput("Outputdir(Enter '0' Unchanged):".ljust(12))
-        if outputdir == '0':
+        if outputdir == "0":
             outputdir = cf.outputdir
             break
         if os.path.isdir(outputdir) == False:
@@ -77,13 +90,13 @@ def setting():
             printErr(0, "Quality Err!")
             continue
         if index == 0:
-            quality = 'LOW'
+            quality = "LOW"
         if index == 1:
-            quality = 'HIGH'
+            quality = "HIGH"
         if index == 2:
-            quality = 'LOSSLESS'
+            quality = "LOSSLESS"
         if index == 3:
-            quality = 'HI_RES'
+            quality = "HI_RES"
         break
     while True:
         index = myinputInt("Resolution(0-1080,1-720,2-480,3-360,4-240):".ljust(12), 99)
@@ -91,15 +104,15 @@ def setting():
             printErr(0, "Resolution Err")
             continue
         if index == 0:
-            resolution = '1080'
+            resolution = "1080"
         if index == 1:
-            resolution = '720'
+            resolution = "720"
         if index == 2:
-            resolution = '480'
+            resolution = "480"
         if index == 3:
-            resolution = '360'
+            resolution = "360"
         if index == 4:
-            resolution = '240'
+            resolution = "240"
         break
     while True:
         threadnum = myinput("ThreadNum:".ljust(12))
@@ -136,7 +149,7 @@ def main(argv=None):
             pass
 
     cf = TidalConfig()
-    onlineVer = pipHelper.getLastVersion('tidal-dl')
+    onlineVer = pipHelper.getLastVersion("tidal-dl")
     print("====================Tidal-dl========================")
     # print("Username     :\t" + cf.username)
     print("OutputDir    :\t" + cf.outputdir)
@@ -195,7 +208,7 @@ def debug():
     #     pass
     # add tag Credits,Info song and full tag (discnumber,irsc,composer,arrenger,publisher,replayGain,releasedate)
     # https://api.tidal.com/v1/albums/71121869/tracks?token=wdgaB1CilGA-S_s2&countryCode=TH
-    print('\nThis is the debug version!!\n')
+    print("\nThis is the debug version!!\n")
     # os.system("pip install aigpy --upgrade")
 
     dl = Download(1)
@@ -213,4 +226,4 @@ def debug():
 #     main(sys.argv)
 
 
-__all__ = ['debug', 'main', 'tidal', 'download']
+__all__ = ["debug", "main", "tidal", "download"]
