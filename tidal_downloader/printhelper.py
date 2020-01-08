@@ -2,17 +2,21 @@
 from aigpy import cmdHelper
 from aigpy import systemHelper
 
+
 def printErr(length, elsestr):
     cmdHelper.myprint("[ERR]".ljust(length), cmdHelper.TextColor.Red, None)
     print(elsestr)
+
 
 def printWarring(length, elsestr):
     cmdHelper.myprint("[WARRING]".ljust(length), cmdHelper.TextColor.Red, None)
     print(elsestr)
 
+
 def printSUCCESS(length, elsestr):
     cmdHelper.myprint("[SUCCESS]".ljust(length), cmdHelper.TextColor.Green, None)
     print(elsestr)
+
 
 def printChoice(string, isInt=False, default=None):
     tmpstr = ""
@@ -21,6 +25,8 @@ def printChoice(string, isInt=False, default=None):
         return cmdHelper.myinput(tmpstr)
     else:
         return cmdHelper.myinputInt(tmpstr, default)
+
+
 def printChoice2(string, default=None):
     ret = printChoice(string, False, default)
     try:
@@ -28,6 +34,8 @@ def printChoice2(string, default=None):
         return ret, iret
     except:
         return ret, default
+
+
 def printMenu():
     print("=====================Choice=========================")
     cmdHelper.myprint(" Enter '0': ", cmdHelper.TextColor.Green, None)
@@ -55,7 +63,7 @@ def printMenu():
     cmdHelper.myprint(" Enter Path: ", cmdHelper.TextColor.Green, None)
     print("Download By File.")
     print("====================================================")
-    
+
 
 LOG = '''
  /$$$$$$$$ /$$       /$$           /$$               /$$ /$$
