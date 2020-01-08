@@ -85,7 +85,8 @@ def setting():
             continue
         break
     while True:
-        index = myinputInt("Quality(0-LOW,1-HIGH,2-LOSSLESS,3-HI_RES):".ljust(12), 999)
+        index = myinputInt(
+            "Quality(0-LOW,1-HIGH,2-LOSSLESS,3-HI_RES):".ljust(12), 999)
         if index > 3 or index < 0:
             printErr(0, "Quality Err!")
             continue
@@ -99,7 +100,8 @@ def setting():
             quality = "HI_RES"
         break
     while True:
-        index = myinputInt("Resolution(0-1080,1-720,2-480,3-360,4-240):".ljust(12), 99)
+        index = myinputInt(
+            "Resolution(0-1080,1-720,2-480,3-360,4-240):".ljust(12), 99)
         if index > 4 or index < 0:
             printErr(0, "Resolution Err")
             continue
@@ -163,7 +165,7 @@ def main(argv=None):
     print("AddHyphen    :\t" + cf.addhyphen + "(between number and title)")
     print("AddYear      :\t" + cf.addyear + "(before album title)")
     print("Version      :\t" + TIDAL_DL_VERSION)
-    if onlineVer != None:
+    if onlineVer is not None:
         print("LastVer      :\t" + onlineVer)
     print("====================================================")
 

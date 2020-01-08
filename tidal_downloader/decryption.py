@@ -3,7 +3,7 @@
 """
 @File    :   decryption.py
 @Time    :   2019/02/27
-@Author  :   Yaron Huang 
+@Author  :   Yaron Huang
 @Version :   1.0
 @Contact :   yaronhuang@qq.com
 @Desc    :   HIGH Quality Track Dectyption;File From Project 'RedSea'
@@ -38,7 +38,8 @@ def decrypt_security_token(security_token):
     # Decrypt the security token
     decrypted_st = decryptor.decrypt(encrypted_st)
 
-    # Get the audio stream decryption key and nonce from the decrypted security token
+    # Get the audio stream decryption key and nonce from the decrypted
+    # security token
     key = decrypted_st[:16]
     nonce = decrypted_st[16:24]
 

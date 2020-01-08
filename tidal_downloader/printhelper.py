@@ -14,7 +14,10 @@ def printWarring(length, elsestr):
 
 
 def printSUCCESS(length, elsestr):
-    cmdHelper.myprint("[SUCCESS]".ljust(length), cmdHelper.TextColor.Green, None)
+    cmdHelper.myprint(
+        "[SUCCESS]".ljust(length),
+        cmdHelper.TextColor.Green,
+        None)
     print(elsestr)
 
 
@@ -32,7 +35,7 @@ def printChoice2(string, default=None):
     try:
         iret = int(ret)
         return ret, iret
-    except:
+    except BaseException:
         return ret, default
 
 
@@ -74,6 +77,6 @@ LOG = """
    | $$   | $$| $$  | $$ /$$__  $$| $$        | $$  | $$| $$
    | $$   | $$|  $$$$$$$|  $$$$$$$| $$        |  $$$$$$$| $$
    |__/   |__/ \_______/ \_______/|__/         \_______/|__/
-   
-       https://github.com/yaronzz/Tidal-Media-Downloader 
+
+       https://github.com/yaronzz/Tidal-Media-Downloader
 """

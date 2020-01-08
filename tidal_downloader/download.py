@@ -3,7 +3,7 @@
 """
 @File    :   download.py
 @Time    :   2019/02/27
-@Author  :   Yaron Huang 
+@Author  :   Yaron Huang
 @Version :   1.0
 @Contact :   yaronhuang@qq.com
 @Desc    :   Download Function
@@ -95,7 +95,8 @@ class Download(object):
         if int(self.config.threadnum) <= 1 and self.showpro:
             showprogress = True
 
-        Contributors = self.tool.getTrackContributors(paraList["trackinfo"]["id"])
+        Contributors = self.tool.getTrackContributors(
+            paraList["trackinfo"]["id"])
         if needDl:
             try:
                 while count > 0:
@@ -111,7 +112,8 @@ class Download(object):
                         break
                 if check:
                     bIsSuccess = True
-                    paraList["path"] = self.tool.covertMp4toM4a(paraList["path"])
+                    paraList["path"] = self.tool.covertMp4toM4a(
+                        paraList["path"])
                     self.tool.setTrackMetadata(
                         paraList["trackinfo"],
                         paraList["path"],
@@ -121,7 +123,7 @@ class Download(object):
                         Contributors,
                     )
                     pstr = paraList["title"]
-            except:
+            except BaseException:
                 pass
         else:
             pstr = paraList["title"]
@@ -173,7 +175,9 @@ class Download(object):
         if extension is None:
             extension = ".m4a"
 
-        seq = self.tool.getIndexStr(item["trackNumber"], albumInfo["numberOfTracks"])
+        seq = self.tool.getIndexStr(
+            item["trackNumber"],
+            albumInfo["numberOfTracks"])
         name = seq + pathHelper.replaceLimitChar(item["title"], "-")
         if self.config.addhyphen == "True":
             name = seq + "- " + pathHelper.replaceLimitChar(item["title"], "-")
@@ -239,7 +243,8 @@ class Download(object):
             # Creat OutputDir
             targetDir = self.__creatAlbumDir(aAlbumInfo)
             # write msg
-            string = self.tool.convertAlbumInfoToString(aAlbumInfo, aAlbumTracks)
+            string = self.tool.convertAlbumInfoToString(
+                aAlbumInfo, aAlbumTracks)
             with codecs.open(targetDir + "/AlbumInfo.txt", "w", "utf-8") as fd:
                 fd.write(string)
             # download cover
@@ -260,7 +265,8 @@ class Download(object):
                         continue
                     if ".jpg" in item:
                         continue
-                    check = printChoice("Some trackFile exist.Is redownload?(y/n):")
+                    check = printChoice(
+                        "Some trackFile exist.Is redownload?(y/n):")
                     if not cmdHelper.isInputYes(check):
                         redownload = False
                     break
@@ -275,7 +281,8 @@ class Download(object):
                 if self.tool.errmsg != "":
                     printErr(
                         14,
-                        item["title"] + "(Get Stream Url Err!" + self.tool.errmsg + ")",
+                        item["title"] +
+                        "(Get Stream Url Err!" + self.tool.errmsg + ")",
                     )
                     continue
 
@@ -313,10 +320,12 @@ class Download(object):
                 if os.access(filePath, 0):
                     os.remove(filePath)
 
-                resolutionList, urlList = self.tool.getVideoResolutionList(item["id"])
+                resolutionList, urlList = self.tool.getVideoResolutionList(
+                    item["id"])
                 selectIndex = self.__getVideoResolutionIndex(resolutionList)
                 if self.ffmpeg.mergerByM3u8_Multithreading2(
-                    urlList[int(selectIndex)], filePath, showprogress=self.showpro
+                    urlList[int(selectIndex)
+                            ], filePath, showprogress=self.showpro
                 ):
                     printSUCCESS(14, item["title"])
                 else:
@@ -488,8 +497,12 @@ class Download(object):
 
             print("[Title]                %s" % (aPlaylistInfo["title"]))
             print("[Type]                 %s" % (aPlaylistInfo["type"]))
-            print("[NumberOfTracks]       %s" % (aPlaylistInfo["numberOfTracks"]))
-            print("[NumberOfVideos]       %s" % (aPlaylistInfo["numberOfVideos"]))
+            print(
+                "[NumberOfTracks]       %s" %
+                (aPlaylistInfo["numberOfTracks"]))
+            print(
+                "[NumberOfVideos]       %s" %
+                (aPlaylistInfo["numberOfVideos"]))
             print("[Duration]             %s\n" % (aPlaylistInfo["duration"]))
 
             # Creat OutputDir
@@ -499,7 +512,8 @@ class Download(object):
             targetDir = os.path.abspath(targetDir)
             pathHelper.mkdirs(targetDir)
             # write msg
-            string = self.tool.convertPlaylistInfoToString(aPlaylistInfo, aItemInfo)
+            string = self.tool.convertPlaylistInfoToString(
+                aPlaylistInfo, aItemInfo)
             with codecs.open(targetDir + "/PlaylistInfo.txt", "w", "utf-8") as fd:
                 fd.write(string)
             # download cover
@@ -559,7 +573,8 @@ class Download(object):
                         + pathHelper.replaceLimitChar(aAlbumInfo["title"], "-")
                         + ".jpg"
                     )
-                    coverUrl = self.tool.getAlbumArtworkUrl(aAlbumInfo["cover"])
+                    coverUrl = self.tool.getAlbumArtworkUrl(
+                        aAlbumInfo["cover"])
                     netHelper.downloadFile(coverUrl, coverPath)
                     paraList = {
                         "album": aAlbumInfo,
@@ -610,17 +625,21 @@ class Download(object):
                     os.remove(filePath)
 
                 videoID = item["id"]
-                resolutionList, urlList = self.tool.getVideoResolutionList(videoID)
+                resolutionList, urlList = self.tool.getVideoResolutionList(
+                    videoID)
                 if urlList is None:
                     printErr(14, item["title"] + "(" + self.tool.errmsg + ")")
                 else:
-                    selectIndex = self.__getVideoResolutionIndex(resolutionList)
+                    selectIndex = self.__getVideoResolutionIndex(
+                        resolutionList)
                     if self.ffmpeg.mergerByM3u8_Multithreading2(
-                        urlList[int(selectIndex)], filePath, showprogress=self.showpro
+                        urlList[int(selectIndex)
+                                ], filePath, showprogress=self.showpro
                     ):
                         printSUCCESS(14, item["title"])
                     else:
-                        printErr(14, item["title"] + "(Download Or Merger Err!)")
+                        printErr(
+                            14, item["title"] + "(Download Or Merger Err!)")
             if playlist_id is not None:
                 return
         return
@@ -639,10 +658,12 @@ class Download(object):
         # download track
         for item in trackList:
             item = item["item"]
-            streamInfo = self.tool.getStreamUrl(str(item["id"]), self.config.quality)
+            streamInfo = self.tool.getStreamUrl(
+                str(item["id"]), self.config.quality)
             if self.tool.errmsg != "":
                 printErr(
-                    14, item["title"] + "(Get Stream Url Err!!" + self.tool.errmsg + ")"
+                    14, item["title"] +
+                    "(Get Stream Url Err!!" + self.tool.errmsg + ")"
                 )
                 continue
 
@@ -680,7 +701,8 @@ class Download(object):
             if os.access(filePath, 0):
                 os.remove(filePath)
 
-            resolutionList, urlList = self.tool.getVideoResolutionList(item["id"])
+            resolutionList, urlList = self.tool.getVideoResolutionList(
+                item["id"])
             selectIndex = self.__getVideoResolutionIndex(resolutionList)
             if self.ffmpeg.mergerByM3u8_Multithreading2(
                 urlList[int(selectIndex)], filePath, showprogress=self.showpro
@@ -724,15 +746,18 @@ class Download(object):
                 redownload = False
 
         for index, item in enumerate(arr["album"]):
-            print("----Album[{0}/{1}]----".format(index + 1, len(arr["album"])))
+            print(
+                "----Album[{0}/{1}]----".format(index + 1, len(arr["album"])))
             print("[ID]          %s" % (item))
             self.downloadAlbum(item, redownload)
         for index, item in enumerate(arr["track"]):
-            print("----Track[{0}/{1}]----".format(index + 1, len(arr["track"])))
+            print(
+                "----Track[{0}/{1}]----".format(index + 1, len(arr["track"])))
             print("[ID]                %s" % (item))
             self.downloadTrack(item)
         for index, item in enumerate(arr["video"]):
-            print("----Video[{0}/{1}]----".format(index + 1, len(arr["video"])))
+            print(
+                "----Video[{0}/{1}]----".format(index + 1, len(arr["video"])))
             print("[ID]                %s" % (item))
             self.downloadVideo(item)
         for index, item in enumerate(arr["url"]):
