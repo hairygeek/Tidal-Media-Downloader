@@ -14,10 +14,8 @@ def printWarring(length, elsestr):
 
 
 def printSUCCESS(length, elsestr):
-    cmdHelper.myprint(
-        "[SUCCESS]".ljust(length),
-        cmdHelper.TextColor.Green,
-        None)
+    cmdHelper.myprint("[SUCCESS]".ljust(length), cmdHelper.TextColor.Green,
+                      None)
     print(elsestr)
 
 
